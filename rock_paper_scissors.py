@@ -1,39 +1,23 @@
 import random
 
-user_wins = 0
-computer_wins = 0
+def play():
+    user = input("What's your choice? 'r' for rock, 'p' for paper, 's' for scissors\n")
+    computer = random.choice(['r', 'p', 's'])
 
-options = ["rock", "paper", "scissors"]
+    if user == computer:
+        return 'It\'s a tie'
 
-while True:
-    user_input = input("Type Rock/Paper/Scissors or Q to quit: ").lower()
-    if user_input == "q":
-        break
+    # r > s, s > p, p > r
+    if is_win(user, computer):
+        return 'You won!'
 
-    if user_input not in options:
-        continue
+    return 'You lost!'
 
-    random_number = random.randint(0, 2)
-    # rock: 0, paper: 1, scissors: 2
-    computer_pick = options[random_number]
-    print("Computer picked", computer_pick + ".")
+def is_win(player, opponent):
+    # return true if player wins
+    # r > s, s > p, p > r
+    if (player == 'r' and opponent == 's') or (player == 's' and opponent == 'p') \
+        or (player == 'p' and opponent == 'r'):
+        return True
 
-    if user_input == "rock" and computer_pick == "scissors":
-        print("You won!")
-        user_wins += 1
-
-    elif user_input == "paper" and computer_pick == "rock":
-        print("You won!")
-        user_wins += 1
-
-    elif user_input == "scissors" and computer_pick == "paper":
-        print("You won!")
-        user_wins += 1
-
-    else:
-        print("You lost!")
-        computer_wins += 1
-
-print("You won", user_wins, "times.")
-print("The computer won", computer_wins, "times.")
-print("Goodbye!")
+print(play())
